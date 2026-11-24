@@ -3,8 +3,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 
 import { daysUntil, nextMTVDeadline } from './dates';
+import { sampleState } from './demo';
 import { uid } from './format';
-import { loadRaw, saveRaw } from './storage';
+import { clearRaw, demoExpiresAt, loadRaw, saveRaw } from './storage';
 import type { AppState, Expense, Vehicle, VehicleDoc } from './types';
 
 const KEY = 'denli-garage:v1';
@@ -43,6 +44,10 @@ interface Store {
   addDoc: (d: NewDoc) => void;
   removeDoc: (id: string) => void;
   resetAll: () => void;
+  /** Web deneme sürümü: örnek garajı yükler */
+  loadSample: () => void;
+  /** Web deneme sürümü: verileri silip hoş geldin ekranına döner */
+  clearDemo: () => void;
 }
 
 const StoreContext = createContext<Store | null>(null);
@@ -98,12 +103,38 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const resetAll = useCallback(() => setState({ ...EMPTY, onboarded: true }), []);
 
+  const loadSample = useCallback(() => setState(sampleState()), []);
+
+  const clearDemo = useCallback(() => {
+    clearRaw(KEY);
+    first.current = true; // boş durumu yeniden kaydetme; süre bir sonraki denemede baştan başlar
+    setState(EMPTY);
+  }, []);
+
   const value = useMemo<Store>(
-    () => ({ state, finishOnboarding, addVehicle, updateVehicle, removeVehicle, addExpense, removeExpense, addDoc, removeDoc, resetAll }),
-    [state, finishOnboarding, addVehicle, updateVehicle, removeVehicle, addExpense, removeExpense, addDoc, removeDoc, resetAll],
+    () => ({
+      state,
+      finishOnboarding,
+      addVehicle,
+      updateVehicle,
+      removeVehicle,
+      addExpense,
+      removeExpense,
+      addDoc,
+      removeDoc,
+      resetAll,
+      loadSample,
+      clearDemo,
+    }),
+    [state, finishOnboarding, addVehicle, updateVehicle, removeVehicle, addExpense, removeExpense, addDoc, removeDoc, resetAll, loadSample, clearDemo],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
+}
+
+/** Web deneme sürümünde verilerin silineceği zaman (ms) */
+export function demoExpiry(): number | null {
+  return demoExpiresAt(KEY);
 }
 
 export function useStore(): Store {

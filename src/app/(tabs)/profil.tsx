@@ -6,6 +6,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { GarageMark, Icon, type IconName } from '@/components/icons';
 import { Button, Card, Screen, T, tap } from '@/components/ui';
 import { confirm } from '@/lib/confirm';
+import { IS_DEMO } from '@/lib/demo';
 import { useStore } from '@/lib/store';
 import { FREE_VEHICLE_LIMIT } from '@/lib/types';
 import { colors, space } from '@/theme';
@@ -29,7 +30,7 @@ function LinkRow({ icon, title, onPress }: { icon: IconName; title: string; onPr
 }
 
 export default function Profile() {
-  const { state, resetAll } = useStore();
+  const { state, resetAll, clearDemo } = useStore();
   const open = (path: string) => WebBrowser.openBrowserAsync(`${SITE}/${path}`).catch(() => {});
 
   return (
@@ -61,23 +62,48 @@ export default function Profile() {
         <LinkRow icon="home" title="garage.getdenli.com" onPress={() => open('')} />
       </Card>
 
-      <Card style={{ gap: space.sm }}>
-        <T variant="h3">Hesap</T>
-        <T color={colors.muted}>
-          Google, Apple ve e-posta ile giriş bir sonraki sürümde geliyor. Şimdilik verilerin yalnızca bu telefonda saklanıyor; uygulamayı
-          silersen veriler de silinir.
-        </T>
-      </Card>
-
-      <Button
-        title="Tüm verileri sil"
-        variant="danger"
-        icon={<Icon name="trash" color={colors.danger} size={20} />}
-        onPress={async () => {
-          if (await confirm('Tüm veriler silinsin mi?', 'Araçlar, masraflar ve belgeler bu telefondan kalıcı olarak silinir.', 'Hepsini sil'))
-            resetAll();
-        }}
-      />
+      {IS_DEMO ? (
+        <>
+          <Card style={{ gap: space.sm }}>
+            <T variant="h3">Deneme sürümü</T>
+            <T color={colors.muted}>
+              {
+                "Bu, Denli Garage'ın web üzerinde denenebilen sürümü. Girdiğin bilgiler sunucuya gönderilmez, yalnızca bu tarayıcıda tutulur ve denemeye başladıktan 24 saat sonra kendiliğinden silinir. Uygulama Google Play'de, ardından App Store'da yayınlanacak."
+              }
+            </T>
+          </Card>
+          <Button
+            title="Denemeyi sıfırla"
+            variant="danger"
+            icon={<Icon name="trash" color={colors.danger} size={20} />}
+            onPress={async () => {
+              if (await confirm('Deneme sıfırlansın mı?', 'Bu tarayıcıdaki tüm deneme verileri silinir.', 'Sıfırla')) {
+                clearDemo();
+                router.replace('/hos-geldin');
+              }
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Card style={{ gap: space.sm }}>
+            <T variant="h3">Hesap</T>
+            <T color={colors.muted}>
+              Google, Apple ve e-posta ile giriş bir sonraki sürümde geliyor. Şimdilik verilerin yalnızca bu telefonda saklanıyor;
+              uygulamayı silersen veriler de silinir.
+            </T>
+          </Card>
+          <Button
+            title="Tüm verileri sil"
+            variant="danger"
+            icon={<Icon name="trash" color={colors.danger} size={20} />}
+            onPress={async () => {
+              if (await confirm('Tüm veriler silinsin mi?', 'Araçlar, masraflar ve belgeler bu telefondan kalıcı olarak silinir.', 'Hepsini sil'))
+                resetAll();
+            }}
+          />
+        </>
+      )}
 
       <T variant="small" style={{ textAlign: 'center' }}>
         Denli Garage {Constants.expoConfig?.version ?? ''} · Bir Denli Teknoloji markası

@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { DemoBanner } from '@/components/demo-banner';
 import { StoreProvider } from '@/lib/store';
 import { colors, fonts } from '@/theme';
 
@@ -23,6 +24,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <StoreProvider>
         <StatusBar style="dark" />
+        <DemoBanner />
         <Stack
           screenOptions={{
             headerShadowVisible: false,

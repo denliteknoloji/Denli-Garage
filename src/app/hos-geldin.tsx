@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { GarageMark, Icon, type IconName } from '@/components/icons';
 import { Button, T } from '@/components/ui';
+import { IS_DEMO } from '@/lib/demo';
 import { useStore } from '@/lib/store';
 import { colors, space } from '@/theme';
 
@@ -14,10 +15,15 @@ const POINTS: { icon: IconName; title: string; text: string }[] = [
 ];
 
 export default function Welcome() {
-  const { finishOnboarding } = useStore();
+  const { finishOnboarding, loadSample } = useStore();
 
   const start = () => {
     finishOnboarding();
+    router.replace('/(tabs)');
+  };
+
+  const startSample = () => {
+    loadSample();
     router.replace('/(tabs)');
   };
 
@@ -53,12 +59,23 @@ export default function Welcome() {
         ))}
       </View>
 
-      <View style={styles.bottom}>
-        <Button title="Başla" variant="brass" onPress={start} />
-        <T variant="small" color={colors.sage} style={{ textAlign: 'center' }}>
-          Verilerin şimdilik bu telefonda saklanır. Hesap ve bulut yedeği bir sonraki sürümde geliyor.
-        </T>
-      </View>
+      {IS_DEMO ? (
+        <View style={styles.bottom}>
+          <Button title="Örnek araçla dene" variant="brass" onPress={startSample} />
+          <Button title="Kendi aracınla dene" variant="ghostLight" onPress={start} />
+          <T variant="small" color={colors.sage} style={{ textAlign: 'center' }}>
+            Bu bir deneme sürümü. Girdiğin bilgiler sunucuya gönderilmez; yalnızca bu tarayıcıda tutulur ve 24 saat sonra
+            kendiliğinden silinir. Lütfen gerçek belge veya kişisel bilgi girme.
+          </T>
+        </View>
+      ) : (
+        <View style={styles.bottom}>
+          <Button title="Başla" variant="brass" onPress={start} />
+          <T variant="small" color={colors.sage} style={{ textAlign: 'center' }}>
+            Verilerin şimdilik bu telefonda saklanır. Hesap ve bulut yedeği bir sonraki sürümde geliyor.
+          </T>
+        </View>
+      )}
     </SafeAreaView>
   );
 }

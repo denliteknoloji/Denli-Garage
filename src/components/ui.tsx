@@ -63,7 +63,7 @@ export function Button({
 }: {
   title: string;
   onPress: () => void;
-  variant?: 'primary' | 'brass' | 'ghost' | 'danger';
+  variant?: 'primary' | 'brass' | 'ghost' | 'ghostLight' | 'danger';
   icon?: ReactNode;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -94,6 +94,7 @@ const buttonVariants = {
   primary: { bg: colors.green, fg: colors.cream, border: colors.green },
   brass: { bg: colors.brass, fg: colors.night, border: colors.brass },
   ghost: { bg: 'transparent', fg: colors.green, border: colors.line },
+  ghostLight: { bg: 'transparent', fg: colors.cream, border: 'rgba(244,241,232,.35)' },
   danger: { bg: 'transparent', fg: colors.danger, border: '#EBC8C0' },
 } as const;
 

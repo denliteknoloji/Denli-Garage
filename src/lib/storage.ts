@@ -16,3 +16,16 @@ export function saveRaw(key: string, value: string): void {
     // Saklama başarısız olursa uygulama çalışmaya devam eder; veri bellekte kalır.
   }
 }
+
+/** Uygulamada süre sınırı yok; yalnızca web deneme sürümünde vardır */
+export function demoExpiresAt(_key: string): number | null {
+  return null;
+}
+
+export function clearRaw(key: string): void {
+  try {
+    Storage.removeItemSync(key);
+  } catch {
+    // yoksay
+  }
+}
