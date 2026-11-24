@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 
-import { colors, fonts, radius, shadow, space } from '@/theme';
+import { colors, fonts, radius, space } from '@/theme';
 
 type TextVariant = 'title' | 'h2' | 'h3' | 'body' | 'label' | 'small';
 
@@ -232,8 +232,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     padding: space.lg,
     borderWidth: 1,
-    borderColor: '#ECE8DD',
-    ...shadow.card,
+    borderColor: '#E7E3D7',
   },
   input: {
     minHeight: 52,

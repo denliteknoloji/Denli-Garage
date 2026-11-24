@@ -18,7 +18,13 @@ export type IconName =
   | 'trash'
   | 'doc'
   | 'shield'
-  | 'star';
+  | 'star'
+  | 'search'
+  | 'fuel'
+  | 'gauge'
+  | 'edit'
+  | 'check'
+  | 'wrench';
 
 export function Icon({ name, size = 22, color = colors.ink }: { name: IconName; size?: number; color?: string }) {
   const p = { stroke: color, strokeWidth: 1.8, fill: 'none', strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
@@ -78,6 +84,17 @@ export function Icon({ name, size = 22, color = colors.ink }: { name: IconName; 
       )}
       {name === 'shield' && <Path {...p} d="M12 3.5 19 6v5.5c0 4.3-3 7.6-7 9-4-1.4-7-4.7-7-9V6l7-2.5Z" />}
       {name === 'star' && <Path {...p} d="m12 4 2.4 5 5.4.6-4 3.7 1.1 5.3L12 16l-4.9 2.6 1.1-5.3-4-3.7 5.4-.6L12 4Z" />}
+      {name === 'search' && (
+        <>
+          <Circle {...p} cx={11} cy={11} r={6} />
+          <Path {...p} d="m20 20-4.5-4.5" />
+        </>
+      )}
+      {name === 'fuel' && <Path {...p} d="M5 20V5.5A1.5 1.5 0 0 1 6.5 4h6A1.5 1.5 0 0 1 14 5.5V20M4 20h11M7 8h5M14 11h2a1.5 1.5 0 0 1 1.5 1.5V16a1.5 1.5 0 0 0 3 0V8.5L18 6" />}
+      {name === 'gauge' && <Path {...p} d="M4.5 16a7.5 7.5 0 1 1 15 0M12 16l3.5-4.5M4.5 16h2M17.5 16h2" />}
+      {name === 'edit' && <Path {...p} d="M5 19h3.5L18 9.5 14.5 6 5 15.5V19ZM13 7.5l3.5 3.5" />}
+      {name === 'check' && <Path {...p} d="m5 12.5 4.5 4.5L19 7.5" />}
+      {name === 'wrench' && <Path {...p} d="M14.5 4.5a4.5 4.5 0 0 0-4.3 5.8L4.5 16a2 2 0 0 0 2.8 2.8l5.7-5.7a4.5 4.5 0 0 0 5.8-4.3l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6c-.4-.2-.9-.3-1.3-.3Z" />}
     </Svg>
   );
 }

@@ -37,8 +37,11 @@ export default function RootLayout() {
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="hos-geldin" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="arac/yeni" options={{ title: 'Araç ekle', presentation: 'modal' }} />
+          <Stack.Screen name="arac/yeni" options={{ headerShown: false, presentation: 'modal' }} />
           <Stack.Screen name="arac/[id]" options={{ title: '' }} />
+          <Stack.Screen name="arac/duzenle" options={{ title: 'Aracı düzenle', presentation: 'modal' }} />
+          <Stack.Screen name="ekle" options={{ title: 'Ne eklemek istersin?', presentation: 'modal' }} />
+          <Stack.Screen name="km" options={{ title: 'Kilometre', presentation: 'modal' }} />
           <Stack.Screen name="masraf/yeni" options={{ title: 'Masraf ekle', presentation: 'modal' }} />
           <Stack.Screen name="belge/yeni" options={{ title: 'Belge ekle', presentation: 'modal' }} />
           <Stack.Screen name="plus" options={{ title: 'Denli Garage Plus', presentation: 'modal' }} />
