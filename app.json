@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Denli Garage",
+    "slug": "denli-garage",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "denligarage",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "bundleIdentifier": "com.getdenli.garage",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "com.getdenli.garage",
+      "adaptiveIcon": {
+        "backgroundColor": "#0F3D2E",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0A2A20",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 120
+        }
+      ],
+      "expo-sqlite"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "owner": "denliteknoloji"
+  }
+}
